@@ -1,0 +1,76 @@
+# =====================================================================
+# PreciOps .gitignore
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# Secrets / credentials — CRITICAL, never commit these
+# ---------------------------------------------------------------------
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+*_credentials.json
+.netrc
+
+# ---------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+
+# ---------------------------------------------------------------------
+# ML workstream — large / raw / regenerable data files
+# ---------------------------------------------------------------------
+# These are all reproducible by re-running the fetch_*.py scripts, and
+# several are well over GitHub's recommended (and in the GRIB2 case,
+# hard) file-size limits. Keep the *scripts* tracked, not their output.
+
+# Raw ECMWF GRIB2 downloads (300MB+ each — will break a git push)
+ecmwf_surface*.grib2
+*.grib2
+
+# Large historical data pulls (regenerate via fetch_training_data.py,
+# fetch_satellite_data.py, fetch_radar_data.py)
+kerala_training_data.csv
+kerala_train*.csv
+kerala_test*.csv
+kerala_satellite_features*.csv
+kerala_radar_features*.csv
+ecmwf_rain_features.csv
+
+# NASA Earthdata / earthaccess local auth cache, if it ever lands in-repo
+.earthdata_cookies*
+
+# Trained model artifacts — uncomment these two lines if you'd rather
+# NOT track the trained model in git (e.g. once it's rebuilt often).
+# Left commented for now since flood_risk_model.json is small enough
+# to be convenient to keep versioned for demo purposes.
+# flood_risk_model.json
+# model_columns.json
+
+# Small reference files are intentionally NOT ignored above:
+# kerala_terrain_features.csv (14 rows, static, cheap to keep tracked)
+# evaluation_report.txt (small, useful history of results over time)
+
+#Editor directories and files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
